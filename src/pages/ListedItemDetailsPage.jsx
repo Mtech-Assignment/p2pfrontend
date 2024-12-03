@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom"; // useParams for itemid, useNavigate for navigation
+import { useParams, useNavigate, useLocation } from "react-router-dom"; // useLocation added
 import BtnMain from "../subcomponents/btns/BtnMain.jsx";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import NftInfo from "../components/nft-info/NftInfo";
@@ -7,6 +7,7 @@ import NftInfo from "../components/nft-info/NftInfo";
 export default function ListedItemDetailsPage() {
   const { id } = useParams(); // Get itemid from URL params
   const navigate = useNavigate(); // For redirecting to other routes
+  const location = useLocation(); // Get the current path
 
   const [loading, setLoading] = useState(false);
   const [nftData, setNftData] = useState(null); // Initially set to null to avoid issues with undefined
@@ -80,17 +81,22 @@ export default function ListedItemDetailsPage() {
     return <div>Loading...</div>;
   }
 
+  // Check if the path includes /my-items to conditionally render the button
+  const isMyItemsPage = location.pathname.includes('/my-items');
+
   return (
       <div>
         {nftData ? (
             <NftInfo nftData={nftData}>
-              <BtnMain
-                  text="Buy Now"
-                  icon={<AiOutlineArrowRight className="text-2xl" />}
-                  className="w-full"
-                  onClick={buyNFT}
-                  disabled={isPurchasing}
-              />
+              {!isMyItemsPage && (
+                  <BtnMain
+                      text="Buy Now"
+                      icon={<AiOutlineArrowRight className="text-2xl" />}
+                      className="w-full"
+                      onClick={buyNFT}
+                      disabled={isPurchasing}
+                  />
+              )}
             </NftInfo>
         ) : (
             <div>No NFT data available.</div>

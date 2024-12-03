@@ -11,7 +11,7 @@ export const navLinks = [
         icon: TbLayoutDashboard
     },
     {
-        title: "Sell NFT",
+        title: "Create NFT",
         link: "/sell",
         icon: HiTemplate
     },

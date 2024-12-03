@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
-import Card from "../../subcomponents/cards/Card.jsx";
 import Loading from "../../subcomponents/loading/Loading.jsx";
+import OwnedCards from "../../subcomponents/cards/OwnedCards.jsx";
 
 export default function MyItems() {
   const [allNFTs, setAllNFTs] = useState([]);
@@ -13,16 +13,35 @@ export default function MyItems() {
     setLoading(true);
 
     try {
-      // Fetch your NFTs here (you might want to replace the following mock code)
-      // Example:
-      // const response = await fetch("/api/getMyNFTs");
-      // const data = await response.json();
-      // setAllNFTs(data);
+      const token = sessionStorage.getItem("token");
+      if (!token) {
+        setError("No authentication token found. Please log in again.");
+        setAllNFTs([]);
+        return;
+      }
 
-      // For now, we'll mock the NFTs:
-      setAllNFTs([{ id: 1, name: "NFT #1", image: "url_to_image" }]);
+      // Make the API call to get user-owned NFTs
+      const response = await fetch("http://scalable.services.com/digital-assets/api/v1/user/nft", {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+      });
 
-      setError(""); // Reset any previous errors
+      // Check if the response is successful
+      if (!response.ok) {
+        throw new Error("Failed to fetch NFTs.");
+      }
+
+      const data = await response.json();
+      if (data.success) {
+        console.log('Data is ', data);
+        setAllNFTs(data.userOwnedNfts.owned_nfts);
+        setError(""); // Reset any previous errors
+      } else {
+        setError("No NFTs found.");
+        setAllNFTs([]);
+      }
     } catch (error) {
       console.error("Error loading NFTs:", error);
       setError("Failed to load NFTs. Please check your wallet connection or try again later.");
@@ -58,16 +77,22 @@ export default function MyItems() {
                     {allNFTs.length ? (
                         allNFTs.map((nft, index) => (
                             <div key={index}>
-                              {/*<Card*/}
-                              {/*    nft={nft}*/}
-                              {/*    url="/my-items/"*/}
-                              {/*    onClick={() => buyNFT(nft)} // Ensure buyNFT function is defined*/}
-                              {/*/>*/}
+                              <OwnedCards
+                                  nft={{
+                                    id: nft._id,
+                                    name: nft.name,
+                                    image: nft.tokenDetailURI, // You can display the image from the tokenDetailURI
+                                    description: nft.description,
+                                    price: nft.price,
+                                  }}
+                                  url="/my-items/"
+                                  // onClick={() => buyNFT(nft)} // Ensure buyNFT function is defined
+                              />
                             </div>
                         ))
                     ) : (
                         <div className="text-center font-semibold text-base">
-                          No purchase history found.
+                          No NFTs found.
                           <Link to="/buy-token"> Buy now some</Link> {/* Updated Link to React Router */}
                         </div>
                     )}
@@ -78,3 +103,4 @@ export default function MyItems() {
       </div>
   );
 }
+

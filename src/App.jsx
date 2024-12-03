@@ -56,6 +56,10 @@ function App() {
             path: "/nft/:id",
             element: <ProtectedRoute element={<ListedItemDetailsPage />} />
         },
+        {
+            path: "/my-items/nft/:id",
+            element: <ProtectedRoute element={<ListedItemDetailsPage />} />
+        },
     ])
 
   return (
