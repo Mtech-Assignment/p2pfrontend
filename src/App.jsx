@@ -7,11 +7,11 @@ import LoginPage from "./pages/LoginPage.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import ProtectedRoute from "./utils/ProtectedRoute.jsx";
 import Sell from "./pages/Sell.jsx";
-import MyItems from "./components/my-items/MyItems.jsx";
 import BuyTokenPage from "./pages/BuyTokenPage.jsx";
 import MyItemsPage from "./pages/MyItemsPage.jsx";
 import TransactionsPage from "./pages/TransactionsPage.jsx";
 import MyListedItemsPage from "./pages/MyListedItemsPage.jsx";
+import ListedItemDetailsPage from "./pages/ListedItemDetailsPage.jsx";
 
 function App() {
 
@@ -30,33 +30,31 @@ function App() {
         },
         {
             path: "/sell",
-            // element: <ProtectedRoute element={<Dashboard />} />
-            element: <Sell />,
+            element: <ProtectedRoute element={<Sell />} />
         },
         {
             path: "/my-items",
-            // element: <ProtectedRoute element={<Dashboard />} />
-            element: <MyItemsPage />,
+            element: <ProtectedRoute element={<MyItemsPage />} />
         },
         {
             path: "/buy-token",
-            // element: <ProtectedRoute element={<Dashboard />} />
-            element: <BuyTokenPage />,
+            element: <ProtectedRoute element={<BuyTokenPage />} />
         },
         {
             path: "/my-items-page",
-            // element: <ProtectedRoute element={<Dashboard />} />
-            element: <MyItemsPage />,
+            element: <ProtectedRoute element={<MyItemsPage />} />
         },
         {
             path: "/transactions",
-            // element: <ProtectedRoute element={<Dashboard />} />
-            element: <TransactionsPage />,
+            element: <ProtectedRoute element={<TransactionsPage />} />
         },
         {
             path: "/my-listed-items",
-            // element: <ProtectedRoute element={<Dashboard />} />
-            element: <MyListedItemsPage />,
+            element: <ProtectedRoute element={<MyListedItemsPage />} />
+        },
+        {
+            path: "/nft/:id",
+            element: <ProtectedRoute element={<ListedItemDetailsPage />} />
         },
     ])
 

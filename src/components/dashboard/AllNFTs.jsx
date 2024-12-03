@@ -44,7 +44,7 @@ export default function AllNFTs() {
                       <div key={index}>
                         <Card
                             nft={nft}
-                            url=""
+                            url="/nft/"
                             onClick={() => {
                               // Navigate to the individual NFT page using react-router
                               navigate(`/${nft.tokenId}`);
