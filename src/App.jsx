@@ -6,7 +6,7 @@ import {
 import LoginPage from "./pages/LoginPage.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import ProtectedRoute from "./utils/ProtectedRoute.jsx";
-import Sell from "./pages/Sell.jsx";
+import CreateNftPage from "./pages/CreateNftPage.jsx";
 import BuyTokenPage from "./pages/BuyTokenPage.jsx";
 import MyItemsPage from "./pages/MyItemsPage.jsx";
 import TransactionsPage from "./pages/TransactionsPage.jsx";
@@ -29,8 +29,8 @@ function App() {
             element: <ProtectedRoute element={<Dashboard />} />
         },
         {
-            path: "/sell",
-            element: <ProtectedRoute element={<Sell />} />
+            path: "/createnft",
+            element: <ProtectedRoute element={<CreateNftPage />} />
         },
         {
             path: "/my-items",

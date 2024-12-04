@@ -3,18 +3,24 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { navLinks } from "../../data/index.js";
 import { AiOutlineMenuUnfold, AiOutlineMenuFold, AiOutlinePlus } from "react-icons/ai";
 import BtnMain from "../../subcomponents/btns/BtnMain.jsx";
+import { IoLogOut } from "react-icons/io5";
 
 export default function Navbar() {
   const navigate = useNavigate();
   const [isMobileNavOpen, setisMobileNavOpen] = useState(false);
 
   const handleClick = () => {
-    navigate("/sell");
+    navigate("/createnft");
     if (isMobileNavOpen) {
       setisMobileNavOpen(false);
     }
   };
 
+  const handleLogout = () => {
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("user");
+    window.location.href = "/login";
+  }
   return (
       <div>
         <div className="sys-app-notCollapsed m-0 p-0 fixed top-0 left-0 w-full shadow z-50">
@@ -44,12 +50,20 @@ export default function Navbar() {
                       </NavLink>
                   ))}
                 </div>
-                <BtnMain
-                    text="List NFT"
-                    icon={<AiOutlinePlus className="text-2xl" />}
-                    className="md:flex hidden"
-                    onClick={handleClick}
-                />
+                <div className={"flex space-x-2 "}>
+                  <BtnMain
+                      text="List NFT"
+                      icon={<AiOutlinePlus className="text-2xl" />}
+                      className="md:flex hidden"
+                      onClick={handleClick}
+                  />
+                  <BtnMain
+                      text="Logout"
+                      icon={<IoLogOut className="text-2xl" />}
+                      className="md:flex hidden"
+                      onClick={handleLogout}
+                  />
+                </div>
                 <div className="md:hidden transition-all mr-3 my-3 cursor-pointer hover:text-gray-700">
                   {isMobileNavOpen ? (
                       <AiOutlineMenuFold
@@ -95,6 +109,12 @@ export default function Navbar() {
                   <BtnMain
                       text="List NFT"
                       icon={<AiOutlinePlus className="text-2xl" />}
+                      className="w-full !rounded-full"
+                      onClick={handleClick}
+                  />
+                  <BtnMain
+                      text="Logout"
+                      icon={<IoLogOut className="text-2xl" />}
                       className="w-full !rounded-full"
                       onClick={handleClick}
                   />

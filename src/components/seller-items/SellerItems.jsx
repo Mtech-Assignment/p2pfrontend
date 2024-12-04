@@ -86,7 +86,7 @@ export default function SellerItems() {
                         ) : (
                             <div className="font-semibold text-base text-center">
                               No Listed NFTs found.{" "}
-                              <BtnMain text="List Now" onClick={() => navigate("/sell")} />
+                              <BtnMain text="List Now" onClick={() => navigate("/createnft")} />
                             </div>
                         )}
                       </div>

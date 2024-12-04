@@ -1,7 +1,7 @@
 import MainLayout from "../components/layouts/MainLayout.jsx";
 import ListItem from "../components/list-item/ListItem.jsx";
 
-const Sell = () => {
+const CreateNftPage = () => {
   return (
     <MainLayout>
       <ListItem />
@@ -9,4 +9,4 @@ const Sell = () => {
   );
 };
 
-export default Sell;
+export default CreateNftPage;

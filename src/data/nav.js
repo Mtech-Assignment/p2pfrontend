@@ -12,7 +12,7 @@ export const navLinks = [
     },
     {
         title: "Create NFT",
-        link: "/sell",
+        link: "/createnft",
         icon: HiTemplate
     },
     {
