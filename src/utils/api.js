@@ -46,7 +46,7 @@ export const validateToken = async (token) => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                token: sessionStorage.getItem("token"),
+                token: token,
             }),
         });
 
