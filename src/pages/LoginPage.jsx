@@ -2,8 +2,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login, register } from "../utils/api.js";
 import { Form } from "react-router";
+import {useAuth} from "../utils/userAuth.js";
 
 const LoginPage = () => {
+    const { isAuthenticated } = useAuth();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
@@ -13,6 +15,9 @@ const LoginPage = () => {
     const [isLoginMode, setIsLoginMode] = useState(true);
     const navigate = useNavigate();
 
+    if (isAuthenticated) {
+        navigate("/"); // Redirect to home if already logged in
+    }
     const handleLoginSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
