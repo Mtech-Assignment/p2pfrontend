@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
-import { validateToken } from "../utils/api";
+import { validateToken } from "./api.js";
 import * as Log from "react-dom/test-utils"; // Import the validateToken function
 
 const ProtectedRoute = ({ element }) => {

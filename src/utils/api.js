@@ -16,8 +16,7 @@ export const login = async (username, password) => {
         throw new Error("Failed to authenticate");
     }
 
-    const data = await response.json();
-    return data;
+    return await response.json();
 };
 
 export const register = async (username, email, password, mnemonic) => {
@@ -52,10 +51,9 @@ export const validateToken = async (token) => {
 
         // Check if the response is OK (status 200-299)
         if (response.ok) {
-            const data = await response.json();
-            return data; // Return the response from the server
+            return await response.json(); // Return the response from the server
         } else {
-            throw new Error("Invalid or expired token");
+            return { success: false, message: "Return with Error" };
         }
     } catch (error) {
         console.error("Token validation failed:", error);
