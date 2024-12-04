@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
-import { validateToken } from "../utils/api"; // Import the validateToken function
+import { validateToken } from "../utils/api";
+import * as Log from "react-dom/test-utils"; // Import the validateToken function
 
 const ProtectedRoute = ({ element }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(null); // To track if authentication check is complete
@@ -26,6 +27,7 @@ const ProtectedRoute = ({ element }) => {
                 }
             } catch (error) {
                 setIsAuthenticated(false);
+                Log.error(error);
             } finally {
                 setLoading(false);
             }
