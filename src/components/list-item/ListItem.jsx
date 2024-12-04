@@ -2,6 +2,8 @@ import { useState } from "react";
 import Input from "../../subcomponents/inputs/Input.jsx";
 import { AiOutlineArrowUp } from "react-icons/ai";
 import BtnMain from "../../subcomponents/btns/BtnMain.jsx";
+import axios from "axios";
+import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
 
 export default function ListItem() {
     const [formData, setFormData] = useState({
@@ -10,6 +12,7 @@ export default function ListItem() {
         price: "",
         file: null,
     });
+    const navigate = useNavigate(); // Initialize useNavigate
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -27,10 +30,47 @@ export default function ListItem() {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle form submission logic here
-        console.log(formData);
+
+        // Check if required fields are filled
+        if (!formData.name || !formData.price || !formData.file) {
+            alert("Please fill in all the required fields.");
+            return;
+        }
+
+        const token = sessionStorage.getItem("token"); // Get the Bearer token from sessionStorage
+        if (!token) {
+            alert("No token found. Please log in again.");
+            return;
+        }
+
+        const formDataToSend = new FormData();
+        formDataToSend.append("name", formData.name);
+        formDataToSend.append("description", formData.description);
+        formDataToSend.append("price", formData.price);
+        formDataToSend.append("file", formData.file);
+
+        try {
+            // POST request to API
+            const response = await axios.post(
+                "http://scalable.services.com/digital-assets/api/v1/nft/mint",
+                formDataToSend,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "multipart/form-data", // Ensuring the file is sent as multipart/form-data
+                    },
+                }
+            );
+
+            // If the request is successful, navigate to /my-items
+            console.log("NFT Minted Successfully", response.data);
+            navigate("/my-items");
+        } catch (error) {
+            console.error("Error minting NFT:", error);
+            alert("An error occurred while listing the NFT. Please try again.");
+        }
     };
 
     return (
