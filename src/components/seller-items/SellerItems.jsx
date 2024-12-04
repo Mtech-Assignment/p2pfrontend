@@ -8,7 +8,7 @@ import BtnMain from "../../subcomponents/btns/BtnMain.jsx";
 export default function SellerItems() {
     const navigate = useNavigate(); // Use navigate from React Router
     const [listedNFTs, setListedNFTs] = useState([]);
-    const [soldNFTs, setSoldNFTs] = useState([]);
+    // const [soldNFTs, setSoldNFTs] = useState([]);
     const [loading, setLoading] = useState(false);
 
     const userId = sessionStorage.getItem("user")
@@ -72,9 +72,9 @@ export default function SellerItems() {
         }
     };
 
-    const buyNFT = (nft) => {
-        // Implement buy logic here (e.g., interacting with blockchain or smart contracts)
-    };
+    // const buyNFT = (nft) => {
+    //     // Implement buy logic here (e.g., interacting with blockchain or smart contracts)
+    // };
 
     // Call loadMyNFTs when the component mounts
     useEffect(() => {
