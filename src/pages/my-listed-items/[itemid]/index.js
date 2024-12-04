@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "react-router";
 import BtnMain from "../../../subcomponents/btns/BtnMain.jsx";
 import { AiOutlineArrowRight } from "react-icons/ai";

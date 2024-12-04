@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";  // Use useNavigate instead of useRouter
 import BtnMain from "../../subcomponents/btns/BtnMain.jsx";
 import { AiOutlineArrowUp } from "react-icons/ai";
 import Input from "./Input.jsx";
 import Loading from "../../subcomponents/loading/Loading.jsx";
 
 export default function CSDPToken() {
-  const navigate = useNavigate(); // useNavigate for navigation
 
   const [loading, setLoading] = useState(false);
   const [currentBalance, setCurrentBalance] = useState(0.0);

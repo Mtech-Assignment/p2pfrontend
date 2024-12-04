@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { validateToken } from "./api.js";
-import * as Log from "react-dom/test-utils"; // Import the validateToken function
+import PropTypes from "prop-types"; // Import the validateToken function
 
 const ProtectedRoute = ({ element }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(null); // To track if authentication check is complete
@@ -25,9 +25,9 @@ const ProtectedRoute = ({ element }) => {
                 } else {
                     setIsAuthenticated(false);
                 }
-            } catch (error) {
+            } catch (e) {
+                console.error(e);
                 setIsAuthenticated(false);
-                Log.error(error);
             } finally {
                 setLoading(false);
             }
@@ -49,5 +49,8 @@ const ProtectedRoute = ({ element }) => {
     // If authenticated, render the protected route element
     return element;
 };
+ProtectedRoute.propTypes = {
+    element: PropTypes.element.isRequired,
+}
 
 export default ProtectedRoute;

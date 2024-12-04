@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom"; // useLocation added
 import BtnMain from "../subcomponents/btns/BtnMain.jsx";
 import { AiOutlineArrowRight } from "react-icons/ai";

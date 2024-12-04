@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import Loading from "../../subcomponents/loading/Loading"; // Adjust the import path as needed
+import { useState, useEffect } from "react";
+import Loading from "../../subcomponents/loading/Loading";
 
 export default function Transactions() {
 

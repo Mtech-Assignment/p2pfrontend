@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // Use useNavigate from React Router
 import Card from "../../subcomponents/cards/Card.jsx";
 import Heading3 from "../../subcomponents/headings/Heading3.jsx";

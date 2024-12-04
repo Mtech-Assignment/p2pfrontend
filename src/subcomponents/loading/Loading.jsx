@@ -1,4 +1,5 @@
 import { Oval, ThreeDots } from "react-loader-spinner";
+import PropTypes from "prop-types";
 
 const Loading = ({ type = "dots" }) => (
     <div className="absolute z-30 min-h-screen w-[98.5%] bg-transparent overflow-x-hidden">
@@ -24,5 +25,9 @@ const Loading = ({ type = "dots" }) => (
         </div>
     </div>
 );
+
+Loading.propTypes = {
+    type: PropTypes.string,
+}
 
 export default Loading;
