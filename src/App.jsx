@@ -37,10 +37,6 @@ function App() {
             element: <ProtectedRoute element={<MyItemsPage />} />
         },
         {
-            path: "/buy-token",
-            element: <ProtectedRoute element={<BuyTokenPage />} />
-        },
-        {
             path: "/my-items-page",
             element: <ProtectedRoute element={<MyItemsPage />} />
         },

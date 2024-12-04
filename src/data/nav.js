@@ -26,11 +26,6 @@ export const navLinks = [
         icon: GiSellCard
     },
     {
-        title: "Buy Token ",
-        link: "/buy-token",
-        icon: GiToken
-    },
-    {
         title: "Transactions ",
         link: "/transactions",
         icon: AiOutlineTransaction
