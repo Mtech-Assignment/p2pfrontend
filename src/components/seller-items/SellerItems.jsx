@@ -72,9 +72,10 @@ export default function SellerItems() {
         }
     };
 
-    // const buyNFT = (nft) => {
-    //     // Implement buy logic here (e.g., interacting with blockchain or smart contracts)
-    // };
+    const buyNFT = (nft) => {
+        console.log("Need to improve more", nft);
+        // Implement buy logic here (e.g., interacting with blockchain or smart contracts)
+    };
 
     // Call loadMyNFTs when the component mounts
     useEffect(() => {
