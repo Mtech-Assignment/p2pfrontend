@@ -14,6 +14,9 @@ export default function MyItems() {
 
     try {
       const token = sessionStorage.getItem("token");
+      const userId = sessionStorage.getItem("user")
+          ? JSON.parse(sessionStorage.getItem("user")).id
+          : null;
       if (!token) {
         setError("No authentication token found. Please log in again.");
         setAllNFTs([]);
@@ -21,7 +24,7 @@ export default function MyItems() {
       }
 
       // Make the API call to get user-owned NFTs
-      const response = await fetch("http://scalable.services.com/digital-assets/api/v1/user/nft", {
+      const response = await fetch(`http://scalable.services.com/marketplace/api/v1/user/${userId}/item`, {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${token}`,
@@ -35,8 +38,8 @@ export default function MyItems() {
 
       const data = await response.json();
       if (data.success) {
-        console.log('Data is ', data);
-        setAllNFTs(data.userOwnedNfts.owned_nfts);
+        setAllNFTs(data.userOwnedNfts.owned_nft_items);
+        console.log('ALl NFT is ');
         setError(""); // Reset any previous errors
       } else {
         setError("No NFTs found.");
@@ -79,11 +82,11 @@ export default function MyItems() {
                             <div key={index}>
                               <OwnedCards
                                   nft={{
-                                    id: nft._id,
-                                    name: nft.name,
-                                    image: nft.tokenDetailURI, // You can display the image from the tokenDetailURI
-                                    description: nft.description,
-                                    price: nft.price,
+                                    id: nft.item._id,
+                                    name: nft.item.name,
+                                    image: nft.item.tokenDetailURI, // You can display the image from the tokenDetailURI
+                                    description: nft.item.description,
+                                    price: nft.item.price,
                                   }}
                                   url="/my-items/"
                                   // onClick={() => buyNFT(nft)} // Ensure buyNFT function is defined

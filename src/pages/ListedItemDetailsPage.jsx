@@ -84,19 +84,29 @@ export default function ListedItemDetailsPage() {
   // Check if the path includes /my-items to conditionally render the button
   const isMyItemsPage = location.pathname.includes('/my-items');
 
+  const resellNft = () =>{
+    console.log('Hello', nftData)
+
+  };
   return (
       <div>
         {nftData ? (
             <NftInfo nftData={nftData}>
-              {!isMyItemsPage && (
+              {/*{!isMyItemsPage && (*/}
+              {/*    <BtnMain*/}
+              {/*        text="Resell"*/}
+              {/*        icon={<AiOutlineArrowRight className="text-2xl" />}*/}
+              {/*        className="w-full"*/}
+              {/*        onClick={buyNFT}*/}
+              {/*        disabled={isPurchasing}*/}
+              {/*    />*/}
+              {/*)}*/}
                   <BtnMain
-                      text="Buy Now"
+                      text="Resell"
                       icon={<AiOutlineArrowRight className="text-2xl" />}
                       className="w-full"
-                      onClick={buyNFT}
-                      disabled={isPurchasing}
+                      onClick={resellNft}
                   />
-              )}
             </NftInfo>
         ) : (
             <div>No NFT data available.</div>
