@@ -25,10 +25,9 @@ const OwnedCards = ({ nft, url = "/" }) => {
 
         fetchImageUrl();
     }, [nft.tokenId]);
-
+    console.log("Nft is ",nft.itemId);
     const handleViewMore = () => {
-        console.log(nft);
-        navigate(`${url}nft/${nft.id}`);
+        navigate(`${url}nft/${nft.id}/${nft.itemId}`);
     };
 
     return (

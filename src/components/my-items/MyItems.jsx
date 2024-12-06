@@ -39,14 +39,12 @@ export default function MyItems() {
       const data = await response.json();
       if (data.success) {
         setAllNFTs(data.userOwnedNfts.owned_nft_items);
-        console.log('ALl NFT is ');
         setError(""); // Reset any previous errors
       } else {
         setError("No NFTs found.");
         setAllNFTs([]);
       }
     } catch (error) {
-      console.error("Error loading NFTs:", error);
       setError("Failed to load NFTs. Please check your wallet connection or try again later.");
       setAllNFTs([]);
     } finally {
@@ -83,6 +81,7 @@ export default function MyItems() {
                               <OwnedCards
                                   nft={{
                                     id: nft.item._id,
+                                    itemId: nft.item_id,
                                     name: nft.item.name,
                                     image: nft.item.tokenDetailURI, // You can display the image from the tokenDetailURI
                                     description: nft.item.description,

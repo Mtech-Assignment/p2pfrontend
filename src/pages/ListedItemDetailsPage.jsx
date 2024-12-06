@@ -5,10 +5,11 @@ import { AiOutlineArrowRight } from "react-icons/ai";
 import NftInfo from "../components/nft-info/NftInfo";
 
 export default function ListedItemDetailsPage() {
-  const { id } = useParams(); // Get itemid from URL params
+  const { tokenId, itemId } = useParams(); // Get itemid from URL params
   const navigate = useNavigate(); // For redirecting to other routes
   const location = useLocation(); // Get the current path
 
+  console.log(itemId,' ',tokenId);
   const [loading, setLoading] = useState(false);
   const [nftData, setNftData] = useState(null); // Initially set to null to avoid issues with undefined
   const [isPurchasing, setIsPurchasing] = useState(false);
@@ -19,7 +20,7 @@ export default function ListedItemDetailsPage() {
     setIsPurchasing(false);
 
     try {
-      const response = await fetch(`http://scalable.services.com/digital-assets/api/v1/nft/${id}`);
+      const response = await fetch(`http://scalable.services.com/digital-assets/api/v1/nft/${tokenId}`);
       if (!response.ok) {
         console.error("Failed to fetch NFT data, status:", response.status);
         return;
@@ -36,7 +37,7 @@ export default function ListedItemDetailsPage() {
         // Process and set the NFT data
         const item = {
           price: nft.price, // Assuming price is already formatted
-          tokenId: id, // Token ID could be same as itemid, update as needed
+          tokenId: tokenId, // Token ID could be same as itemid, update as needed
           seller: nft.owner, // Assuming owner as seller
           owner: nft.owner, // You may want to update how owner is determined
           image: metaData.image,
@@ -72,10 +73,10 @@ export default function ListedItemDetailsPage() {
   };
 
   useEffect(() => {
-    if (id) {
+    if (tokenId) {
       loadNFT();
     }
-  }, [id]);
+  }, [tokenId]);
 
   if (loading) {
     return <div>Loading...</div>;

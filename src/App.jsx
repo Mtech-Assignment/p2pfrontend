@@ -49,11 +49,11 @@ function App() {
             element: <ProtectedRoute element={<MyListedItemsPage />} />
         },
         {
-            path: "/nft/:id",
+            path: "/nft/:tokenId/:itemId",
             element: <ProtectedRoute element={<ListedItemDetailsPage />} />
         },
         {
-            path: "/my-items/nft/:id",
+            path: "/my-items/nft/:tokenId/:itemId",
             element: <ProtectedRoute element={<ListedItemDetailsPage />} />
         },
     ])
