@@ -3,13 +3,12 @@ import { useParams, useNavigate, useLocation } from "react-router-dom"; // useLo
 import BtnMain from "../subcomponents/btns/BtnMain.jsx";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import NftInfo from "../components/nft-info/NftInfo";
+import axios from "axios";
 
 export default function ListedItemDetailsPage() {
   const { tokenId, itemId } = useParams(); // Get itemid from URL params
   const navigate = useNavigate(); // For redirecting to other routes
   const location = useLocation(); // Get the current path
-
-  console.log(itemId,' ',tokenId);
   const [loading, setLoading] = useState(false);
   const [nftData, setNftData] = useState(null); // Initially set to null to avoid issues with undefined
   const [isPurchasing, setIsPurchasing] = useState(false);
@@ -45,7 +44,6 @@ export default function ListedItemDetailsPage() {
           description: metaData.description,
         };
 
-        console.log("NFT data set:", item);
         setNftData(item);
       } else {
         console.error("Failed to fetch NFT data. Error:", data);
@@ -85,23 +83,36 @@ export default function ListedItemDetailsPage() {
   // Check if the path includes /my-items to conditionally render the button
   const isMyItemsPage = location.pathname.includes('/my-items');
 
-  const resellNft = () =>{
-    console.log('Hello', nftData)
+  const resellNft = async () => {
+    const token = sessionStorage.getItem("token");
 
+    const response = await axios.put(
+        `http://scalable.services.com/marketplace/api/v1/marketplace/${itemId}/resell`,
+        {
+          resell_price: nftData.price,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data", // Ensuring the file is sent as multipart/form-data
+          },
+        }
+    );
+    setLoading(true);
+    if(response.data.success === true ) {
+      navigate("/");
+    }
   };
   return (
       <div>
-        {nftData ? (
+        {loading ? (
+            <div>
+              Reselling on the way
+            </div>
+        )
+        :(
+        nftData ? (
             <NftInfo nftData={nftData}>
-              {/*{!isMyItemsPage && (*/}
-              {/*    <BtnMain*/}
-              {/*        text="Resell"*/}
-              {/*        icon={<AiOutlineArrowRight className="text-2xl" />}*/}
-              {/*        className="w-full"*/}
-              {/*        onClick={buyNFT}*/}
-              {/*        disabled={isPurchasing}*/}
-              {/*    />*/}
-              {/*)}*/}
                   <BtnMain
                       text="Resell"
                       icon={<AiOutlineArrowRight className="text-2xl" />}
@@ -111,7 +122,7 @@ export default function ListedItemDetailsPage() {
             </NftInfo>
         ) : (
             <div>No NFT data available.</div>
-        )}
+        ))}
       </div>
   );
 }
