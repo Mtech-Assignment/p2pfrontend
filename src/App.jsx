@@ -7,11 +7,11 @@ import LoginPage from "./pages/LoginPage.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import ProtectedRoute from "./utils/ProtectedRoute.jsx";
 import CreateNftPage from "./pages/CreateNftPage.jsx";
-import BuyTokenPage from "./pages/BuyTokenPage.jsx";
+import ListedItemsDetailPage from "./pages/ListedItemsDetailPage.jsx";
 import MyItemsPage from "./pages/MyItemsPage.jsx";
 import TransactionsPage from "./pages/TransactionsPage.jsx";
 import MyListedItemsPage from "./pages/MyListedItemsPage.jsx";
-import ListedItemDetailsPage from "./pages/ListedItemDetailsPage.jsx";
+import OwnedItemsDetailPage from "./pages/OwnedItemsDetailPage.jsx";
 
 function App() {
 
@@ -50,11 +50,11 @@ function App() {
         },
         {
             path: "/nft/:tokenId/:itemId",
-            element: <ProtectedRoute element={<ListedItemDetailsPage />} />
+            element: <ProtectedRoute element={<ListedItemsDetailPage />} />
         },
         {
             path: "/my-items/nft/:tokenId/:itemId",
-            element: <ProtectedRoute element={<ListedItemDetailsPage />} />
+            element: <ProtectedRoute element={<OwnedItemsDetailPage />} />
         },
     ])
 

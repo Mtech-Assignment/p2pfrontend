@@ -33,7 +33,7 @@ const Card = ({ nft, url = "/" }) => {
     }, [nft.tokenId]);  // Re-run when nft.tokenId changes
 
     const handleViewMore = () => {
-        navigate(`${url}${nft.tokenId}`);
+        navigate(`${url}${nft.tokenId}/${nft._id}`);
     };
 
     return (

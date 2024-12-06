@@ -65,6 +65,20 @@ export default function ListItem() {
             );
 
             // If the request is successful, navigate to /my-items
+            console.log(response.data);
+            if(response.data.success === true) {
+                console.log("Aaa gya mai");
+                const listNft = await axios.post("http://scalable.services.com/marketplace/api/v1/marketplace/list",{
+                    nft_id: response.data.transaction.tokenid,
+                },{
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                });
+                if(listNft.data.success === true) {
+                    console.log("Successfully Listed");
+                }
+            }
             console.log("NFT Minted Successfully", response.data);
             navigate("/my-items");
         } catch (error) {

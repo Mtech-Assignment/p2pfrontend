@@ -5,14 +5,18 @@ import { AiOutlineArrowRight } from "react-icons/ai";
 import NftInfo from "../components/nft-info/NftInfo";
 import axios from "axios";
 
-export default function ListedItemDetailsPage() {
+export default function OwnedItemsDetailPage() {
   const { tokenId, itemId } = useParams(); // Get itemid from URL params
   const navigate = useNavigate(); // For redirecting to other routes
   const location = useLocation(); // Get the current path
   const [loading, setLoading] = useState(false);
   const [nftData, setNftData] = useState(null); // Initially set to null to avoid issues with undefined
   const [isPurchasing, setIsPurchasing] = useState(false);
+  const[amount, setAmount] = useState(0);
 
+  const handleChange = (event) => {
+    setAmount(event.target.value);
+  };
   // Load NFT data from backend API
   const loadNFT = async () => {
     setLoading(true);
@@ -85,11 +89,11 @@ export default function ListedItemDetailsPage() {
 
   const resellNft = async () => {
     const token = sessionStorage.getItem("token");
-
+    console.log("Token",token);
     const response = await axios.put(
         `http://scalable.services.com/marketplace/api/v1/marketplace/${itemId}/resell`,
         {
-          resell_price: nftData.price,
+          resell_price: amount,
         },
         {
           headers: {
@@ -113,12 +117,19 @@ export default function ListedItemDetailsPage() {
         :(
         nftData ? (
             <NftInfo nftData={nftData}>
-                  <BtnMain
-                      text="Resell"
-                      icon={<AiOutlineArrowRight className="text-2xl" />}
-                      className="w-full"
-                      onClick={resellNft}
-                  />
+              {/*<label htmlFor="Amount">Enter a Amount:</label>*/}
+              {/*<input type="number" id="amount"*/}
+              {/*       name="Amount"*/}
+              {/*       min="1" max="100" step="1"*/}
+              {/*       onChange={handleChange}*/}
+              {/*       placeholder="01"/>*/}
+
+              <BtnMain
+                  text="Resell"
+                  icon={<AiOutlineArrowRight className="text-2xl"/>}
+                  className="w-full"
+                  onClick={resellNft}
+              />
             </NftInfo>
         ) : (
             <div>No NFT data available.</div>

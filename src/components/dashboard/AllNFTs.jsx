@@ -47,7 +47,7 @@ export default function AllNFTs() {
                             url="/nft/"
                             onClick={() => {
                               // Navigate to the individual NFT page using react-router
-                              navigate(`/${nft.tokenId}`);
+                              navigate(`/${nft.tokenId}/${nft._id}`);
                               console.log("Onclicked on buy button.");
                             }}
                         />
