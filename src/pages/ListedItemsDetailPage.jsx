@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate, useLocation } from "react-router-dom"; // useLocation added
+import { useParams, useNavigate } from "react-router-dom"; // useLocation added
 import BtnMain from "../subcomponents/btns/BtnMain.jsx";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import NftInfo from "../components/nft-info/NftInfo";
@@ -8,7 +8,7 @@ import axios from "axios";
 export default function ListedItemsDetailPage() {
     const { tokenId, itemId } = useParams(); // Get itemid from URL params
     const navigate = useNavigate(); // For redirecting to other routes
-    const location = useLocation(); // Get the current path
+    // const location = useLocation(); // Get the current path
     const [loading, setLoading] = useState(false);
     const [nftData, setNftData] = useState(null); // Initially set to null to avoid issues with undefined
     const [isPurchasing, setIsPurchasing] = useState(false);
@@ -77,11 +77,13 @@ export default function ListedItemsDetailPage() {
     }, [tokenId]);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <div className="loading-screen">
+            <div className="loading-text">Loading...</div>
+        </div>
     }
 
     // Check if the path includes /my-items to conditionally render the button
-    const isMyItemsPage = location.pathname.includes('/my-items');
+    // const isMyItemsPage = location.pathname.includes('/my-items');
 
     const buyNft = async () => {
         const token = sessionStorage.getItem("token");

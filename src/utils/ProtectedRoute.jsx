@@ -38,7 +38,11 @@ const ProtectedRoute = ({ element }) => {
 
     // If loading, show nothing or a loading indicator
     if (loading) {
-        return <div>Loading...</div>; // Or show a loading spinner, etc.
+        return (
+            <div className="loading-screen">
+                <div className="loading-text">Loading...</div>
+            </div>
+        );
     }
 
     // If not authenticated, redirect to login page

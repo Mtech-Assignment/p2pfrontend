@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate, useLocation } from "react-router-dom"; // useLocation added
+import { useParams, useNavigate } from "react-router-dom"; // useLocation added
 import BtnMain from "../subcomponents/btns/BtnMain.jsx";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import NftInfo from "../components/nft-info/NftInfo";
@@ -8,7 +8,7 @@ import axios from "axios";
 export default function OwnedItemsDetailPage() {
   const { tokenId, itemId } = useParams(); // Get itemid from URL params
   const navigate = useNavigate(); // For redirecting to other routes
-  const location = useLocation(); // Get the current path
+  // const location = useLocation(); // Get the current path
   const [loading, setLoading] = useState(false);
   const [nftData, setNftData] = useState(null); // Initially set to null to avoid issues with undefined
   const [isReselling, setIsReselling] = useState(false);
@@ -59,21 +59,6 @@ export default function OwnedItemsDetailPage() {
     setLoading(false);
   };
 
-  const buyNFT = async () => {
-    setIsReselling(true);
-    try {
-      // Simulating purchase logic with a timeout
-      setTimeout(() => {
-        alert("NFT purchased!");
-        setIsReselling(false);
-        navigate("/my-items"); // Redirect to the "my-items" page after purchase
-      }, 2000);
-    } catch (error) {
-      console.error("Error purchasing NFT:", error);
-      setIsReselling(false);
-    }
-  };
-
   useEffect(() => {
     if (tokenId) {
       loadNFT();
@@ -81,11 +66,13 @@ export default function OwnedItemsDetailPage() {
   }, [tokenId]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="loading-screen">
+      <div className="loading-text">Loading...</div>
+    </div>
   }
 
   // Check if the path includes /my-items to conditionally render the button
-  const isMyItemsPage = location.pathname.includes('/my-items');
+  // const isMyItemsPage = location.pathname.includes('/my-items');
 
   const resellNft = async () => {
     const token = sessionStorage.getItem("token");
@@ -98,7 +85,7 @@ export default function OwnedItemsDetailPage() {
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data", // Ensuring the file is sent as multipart/form-data
+            "Content-Type": "application/json", // Ensuring the file is sent as multipart/form-data
           },
         }
     );
@@ -112,27 +99,33 @@ export default function OwnedItemsDetailPage() {
             <div className="reselling-message">
               Reselling on the way...
             </div>
-            )
-            : (
-                nftData ? (
-                    <NftInfo nftData={nftData}>
-                      {/*<label htmlFor="Amount">Enter a Amount:</label>*/}
-              {/*<input type="number" id="amount"*/}
-              {/*       name="Amount"*/}
-              {/*       min="1" max="100" step="1"*/}
-              {/*       onChange={handleChange}*/}
-              {/*       placeholder="01"/>*/}
-
-              <BtnMain
-                  text="Resell"
-                  icon={<AiOutlineArrowRight className="text-2xl"/>}
-                  className="w-full"
-                  onClick={resellNft}
-              />
-            </NftInfo>
         ) : (
-            <div>No NFT data available.</div>
-        ))}
+            nftData ? (
+                <NftInfo nftData={nftData}>
+                  <label htmlFor="amount" className="label-amount">Enter Resell Amount:</label>
+                  <input
+                      type="number"
+                      id="amount"
+                      name="Amount"
+                      className="input-field"
+                      min="1"
+                      max="100"
+                      step="1"
+                      onChange={handleChange}
+                      placeholder="01"
+                  />
+
+                  <BtnMain
+                      text="Resell"
+                      icon={<AiOutlineArrowRight className="text-2xl"/>}
+                      className="btn-main w-full"
+                      onClick={resellNft}
+                  />
+                </NftInfo>
+            ) : (
+                <div className="no-nft-data">No NFT data available.</div>
+            )
+        )}
       </div>
   );
 }
