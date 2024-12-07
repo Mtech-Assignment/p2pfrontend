@@ -11,7 +11,7 @@ export default function OwnedItemsDetailPage() {
   const location = useLocation(); // Get the current path
   const [loading, setLoading] = useState(false);
   const [nftData, setNftData] = useState(null); // Initially set to null to avoid issues with undefined
-  const [isPurchasing, setIsPurchasing] = useState(false);
+  const [isReselling, setIsReselling] = useState(false);
   const[amount, setAmount] = useState(0);
 
   const handleChange = (event) => {
@@ -20,7 +20,7 @@ export default function OwnedItemsDetailPage() {
   // Load NFT data from backend API
   const loadNFT = async () => {
     setLoading(true);
-    setIsPurchasing(false);
+    setIsReselling(false);
 
     try {
       const response = await fetch(`http://scalable.services.com/digital-assets/api/v1/nft/${tokenId}`);
@@ -60,17 +60,17 @@ export default function OwnedItemsDetailPage() {
   };
 
   const buyNFT = async () => {
-    setIsPurchasing(true);
+    setIsReselling(true);
     try {
       // Simulating purchase logic with a timeout
       setTimeout(() => {
         alert("NFT purchased!");
-        setIsPurchasing(false);
+        setIsReselling(false);
         navigate("/my-items"); // Redirect to the "my-items" page after purchase
       }, 2000);
     } catch (error) {
       console.error("Error purchasing NFT:", error);
-      setIsPurchasing(false);
+      setIsReselling(false);
     }
   };
 
@@ -89,7 +89,7 @@ export default function OwnedItemsDetailPage() {
 
   const resellNft = async () => {
     const token = sessionStorage.getItem("token");
-    console.log("Token",token);
+    setIsReselling(true);
     const response = await axios.put(
         `http://scalable.services.com/marketplace/api/v1/marketplace/${itemId}/resell`,
         {
@@ -102,22 +102,21 @@ export default function OwnedItemsDetailPage() {
           },
         }
     );
-    setLoading(true);
     if(response.data.success === true ) {
       navigate("/");
     }
   };
   return (
       <div>
-        {loading ? (
-            <div>
-              Reselling on the way
+        {isReselling ? (
+            <div className="reselling-message">
+              Reselling on the way...
             </div>
-        )
-        :(
-        nftData ? (
-            <NftInfo nftData={nftData}>
-              {/*<label htmlFor="Amount">Enter a Amount:</label>*/}
+            )
+            : (
+                nftData ? (
+                    <NftInfo nftData={nftData}>
+                      {/*<label htmlFor="Amount">Enter a Amount:</label>*/}
               {/*<input type="number" id="amount"*/}
               {/*       name="Amount"*/}
               {/*       min="1" max="100" step="1"*/}

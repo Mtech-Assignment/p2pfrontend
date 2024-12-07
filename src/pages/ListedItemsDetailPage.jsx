@@ -55,20 +55,20 @@ export default function ListedItemsDetailPage() {
         setLoading(false);
     };
 
-    const buyNFT = async () => {
-        setIsPurchasing(true);
-        try {
-            // Simulating purchase logic with a timeout
-            setTimeout(() => {
-                alert("NFT purchased!");
-                setIsPurchasing(false);
-                navigate("/my-items"); // Redirect to the "my-items" page after purchase
-            }, 2000);
-        } catch (error) {
-            console.error("Error purchasing NFT:", error);
-            setIsPurchasing(false);
-        }
-    };
+    // const buyNFT = async () => {
+    //     setIsPurchasing(true);
+    //     try {
+    //         // Simulating purchase logic with a timeout
+    //         setTimeout(() => {
+    //             alert("NFT purchased!");
+    //             setIsPurchasing(false);
+    //             navigate("/my-items"); // Redirect to the "my-items" page after purchase
+    //         }, 2000);
+    //     } catch (error) {
+    //         console.error("Error purchasing NFT:", error);
+    //         setIsPurchasing(false);
+    //     }
+    // };
 
     useEffect(() => {
         if (tokenId) {
@@ -85,7 +85,7 @@ export default function ListedItemsDetailPage() {
 
     const buyNft = async () => {
         const token = sessionStorage.getItem("token");
-
+        setIsPurchasing(true);
         const response = await axios.put(
             `http://scalable.services.com/marketplace/api/v1/marketplace/${itemId}/buy`,
             {},
@@ -95,31 +95,31 @@ export default function ListedItemsDetailPage() {
                 },
             }
         );
-        setLoading(true);
         if(response.data.success === true ) {
             navigate("/my-items");
         }
     };
     return (
         <div>
-            {loading ? (
-                    <div>
-                        Reselling on the way
-                    </div>
+            {isPurchasing ? (
+                <div className="reselling-message">
+                    Buying on the way...
+                </div>
+            ) : (
+                nftData ? (
+                    <NftInfo nftData={nftData}>
+                        <BtnMain
+                            text="Buy Now"
+                            icon={<AiOutlineArrowRight className="text-2xl"/>}
+                            className="w-full"
+                            onClick={buyNft}
+                        />
+                    </NftInfo>
+                ) : (
+                    <div>No NFT data available.</div>
                 )
-                :(
-                    nftData ? (
-                        <NftInfo nftData={nftData}>
-                            <BtnMain
-                                text="Buy Now"
-                                icon={<AiOutlineArrowRight className="text-2xl" />}
-                                className="w-full"
-                                onClick={buyNft}
-                            />
-                        </NftInfo>
-                    ) : (
-                        <div>No NFT data available.</div>
-                    ))}
+            )}
         </div>
+
     );
 }

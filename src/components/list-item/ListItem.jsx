@@ -80,7 +80,7 @@ export default function ListItem() {
                 }
             }
             console.log("NFT Minted Successfully", response.data);
-            navigate("/my-items");
+            navigate("/");
         } catch (error) {
             console.error("Error minting NFT:", error);
             alert("An error occurred while listing the NFT. Please try again.");
